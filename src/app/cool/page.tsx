@@ -1,13 +1,9 @@
 export default function Kewl() {
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-primary text-white gap-5">
-      {/* 
-      Write something unique about you here! 
-      It could be a club you're part of, a weird skill you have, or something special that happened to you.
-      Feel free to put links, images, whatever! 
-      Don't worry about styling- we aren't grading you on this- it's just to get to know you better! :) 
-      */}
-      😎😎😎
+    <div className="flex flex-col gap-5 justify-center items-center min-h-screen text-white bg-primary">
+      Hey! My name is Rohan and I'm a first year at Georgia Tech! I love to
+      read, listen to music (mainly rap and hiphop), and play videogames
+      (overwatch, factorio and marvel rivals are my current favorites).
     </div>
   );
 }
