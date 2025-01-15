@@ -1,7 +1,11 @@
 import { PAGINATION_PAGE_SIZE } from "@/lib/constants/config";
 import { RequestStatus } from "@/lib/types/request";
-import { requestsSchema, type RequestNoId } from "@/lib/validation/requests";
-import { MongoClient } from "mongodb";
+import {
+  NormalizedRequest,
+  requestsSchema,
+  type RequestNoId,
+} from "@/lib/validation/requests";
+import { MongoClient, ObjectId } from "mongodb";
 import { z } from "zod";
 
 console.log(process.env.MONGO_URI);
@@ -35,4 +39,19 @@ export async function getRequests({
 
   // again: infallible & just for types
   return z.array(requestsSchema).parse(data);
+}
+
+export async function updateRequest({
+  id,
+  status,
+}: Pick<NormalizedRequest, "id" | "status">) {
+  await requests.updateOne(
+    { _id: new ObjectId(id) },
+    {
+      $set: {
+        status,
+        lastEditedDate: new Date(),
+      },
+    },
+  );
 }

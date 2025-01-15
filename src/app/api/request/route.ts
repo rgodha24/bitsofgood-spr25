@@ -1,8 +1,11 @@
 import { ServerResponseBuilder } from "@/lib/builders/serverResponseBuilder";
 import { ResponseType } from "@/lib/types/apiResponse";
 import { RequestStatus } from "@/lib/types/request";
-import { requestsSchemaWithoutId } from "@/lib/validation/requests";
-import { createRequest, getRequests } from "@/server/db";
+import {
+  requestsIdSchema,
+  requestsSchemaWithoutId,
+} from "@/lib/validation/requests";
+import { createRequest, getRequests, updateRequest } from "@/server/db";
 import { z, ZodError } from "zod";
 
 export async function PUT(request: Request) {
@@ -44,6 +47,25 @@ export async function GET(request: Request) {
     );
 
     return Response.json(await getRequests({ page, status }));
+  } catch (e) {
+    console.error(e);
+    if (e instanceof ZodError) {
+      return new ServerResponseBuilder(ResponseType.INVALID_INPUT).build();
+    }
+    return new ServerResponseBuilder(ResponseType.UNKNOWN_ERROR).build();
+  }
+}
+
+export async function PATCH(request: Request) {
+  try {
+    const bodySchema = requestsIdSchema.and(
+      requestsSchemaWithoutId.pick({ status: true }),
+    );
+    const { id, status } = bodySchema.parse(await request.json());
+
+    await updateRequest({ id, status });
+
+    return new Response(null, { status: 200 });
   } catch (e) {
     console.error(e);
     if (e instanceof ZodError) {

@@ -10,9 +10,9 @@
     - [x] Setup item requests collection
     - [x] `PUT /api/request`
     - [x] `GET /api/request?page=_`
-  - [ ] Main Requirements
-    - [ ] `GET /api/request?status=pending`
-    - [ ] `PATCH /api/request`
+  - [x] Main Requirements
+    - [x] `GET /api/request?status=pending`
+    - [x] `PATCH /api/request`
   - [ ] Above and Beyond
     - [ ] Batch edits
     - [ ] Batch deletes
