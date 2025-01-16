@@ -41,6 +41,10 @@ export async function getRequests({
   return z.array(requestsSchema).parse(data);
 }
 
+export async function countRequests({ status }: { status?: RequestStatus }) {
+  return await requests.countDocuments(!!status ? { status } : {});
+}
+
 export async function updateRequest({
   id,
   status,

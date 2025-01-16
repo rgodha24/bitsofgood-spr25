@@ -9,8 +9,11 @@ import {
 } from "@tanstack/react-table";
 import Dropdown from "../atoms/Dropdown";
 import { RequestStatus } from "@/lib/types/request";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
+import {
+  useIsFetching,
+  useMutation,
+  useQueryClient,
+} from "@tanstack/react-query";
 
 const columnHelper = createColumnHelper<NormalizedRequest>();
 
@@ -36,7 +39,7 @@ const columns = [
     header: "Updated",
   }),
   columnHelper.accessor("status", {
-    cell: (info) => <StatusCell cell={info} />,
+    cell: (info) => <StatusCell info={info} />,
     header: "Status",
   }),
 ];
@@ -88,35 +91,37 @@ export default function RequestTable({ data }: { data: NormalizedRequest[] }) {
 }
 
 function StatusCell({
-  cell,
+  info,
 }: {
-  cell: CellContext<NormalizedRequest, RequestStatus>;
+  info: CellContext<NormalizedRequest, RequestStatus>;
 }) {
-  const [status, setStatus] = useState(cell.getValue());
   const queryClient = useQueryClient();
+  const isFetchingRequests = useIsFetching({ queryKey: ["requests"] }) > 0;
 
   const mutation = useMutation({
     mutationFn: async (status: RequestStatus) => {
       fetch("/api/request", {
         method: "PATCH",
         body: JSON.stringify({
-          id: cell.row.original.id,
+          id: info.row.original.id,
           status,
         }),
       });
+
+      return status;
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["requests"] });
+      queryClient.invalidateQueries({ queryKey: ["requests"] }, {});
     },
   });
 
   return (
     <Dropdown
-      value={status}
+      value={info.getValue()}
       onValueChange={(newStatus) => {
-        setStatus(newStatus);
         mutation.mutate(newStatus);
       }}
+      loading={mutation.isPending || (mutation.isSuccess && isFetchingRequests)}
     />
   );
 }

@@ -22,13 +22,10 @@
     - [x] Table component
     - [x] Base page [table with data]
     - [x] Table dropdown interactivity
-  - [ ] Main Requirements
-    - [ ] Pagination
-    - [ ] Tabs
+  - [x] Main Requirements
+    - [x] Pagination
+    - [x] Tabs
   - [ ] Above and Beyond
     - [ ] Batch edits
     - [ ] Batch deletes
 
-# Notes
-
-<!-- Notes go here -->

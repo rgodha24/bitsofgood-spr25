@@ -5,17 +5,20 @@ import { ChevronDownIcon, Dot } from "lucide-react";
 export interface DropdownProps {
   value: RequestStatus;
   onValueChange: (value: RequestStatus) => void;
+  loading: boolean;
 }
 
 export default function Dropdown({
   value: status,
   onValueChange,
+  loading,
 }: DropdownProps) {
   return (
     <Select.Root value={status} onValueChange={onValueChange}>
       <Select.Trigger
-        className="flex flex-row gap-x-4 items-center p-2 rounded-md border border-gray-stroke hover:bg-primary-fill"
+        className="flex flex-row gap-x-4 items-center p-2 rounded-md border border-gray-stroke hover:bg-primary-fill data-[loading=true]:bg-warning-fill"
         aria-label="Status"
+        data-loading={loading}
       >
         <Select.Value asChild>
           <div
