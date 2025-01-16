@@ -14,7 +14,7 @@ export default function Dropdown({
   return (
     <Select.Root value={status} onValueChange={onValueChange}>
       <Select.Trigger
-        className="flex flex-row gap-x-4 items-center py-1 px-2 rounded-md border border-gray-stroke"
+        className="flex flex-row gap-x-4 items-center p-2 rounded-md border border-gray-stroke hover:bg-primary-fill"
         aria-label="Status"
       >
         <Select.Value asChild>
@@ -22,7 +22,7 @@ export default function Dropdown({
             className={`flex flex-row rounded-full w-min pr-4 items-center ${statusToStyles[status][0]}`}
           >
             <Dot className={`-mr-1 w-8 h-8 ${statusToStyles[status][1]}`} />
-            <p className="text-sm">{statusToName[status]}</p>
+            <p className="text-xs">{statusToName[status]}</p>
           </div>
         </Select.Value>
         <Select.Icon className="stroke-gray-text" asChild>
@@ -35,7 +35,7 @@ export default function Dropdown({
           position="popper"
         >
           <Select.Viewport>
-            <Select.Group className="flex flex-col gap-y-2">
+            <Select.Group className="flex flex-col gap-y-2 pl-1 first:pt-1">
               <SelectItem status={RequestStatus.PENDING} />
               <SelectItem status={RequestStatus.APPROVED} />
               <SelectItem status={RequestStatus.COMPLETED} />
@@ -65,11 +65,11 @@ const statusToStyles: Record<RequestStatus, [string, string]> = {
 function SelectItem({ status }: { status: RequestStatus }) {
   return (
     <Select.Item
-      className={`flex flex-row rounded-full w-min pr-4 items-center ${statusToStyles[status][0]}`}
+      className={`flex flex-row rounded-full w-min pr-4 items-center text-xs ${statusToStyles[status][0]}`}
       value={status}
     >
       <Dot className={`-mr-1 w-8 h-8 ${statusToStyles[status][1]}`} />
-      <Select.ItemText className="text-sm">
+      <Select.ItemText className="text-xs">
         {statusToName[status]}
       </Select.ItemText>
     </Select.Item>
