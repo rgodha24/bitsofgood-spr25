@@ -19,10 +19,10 @@ export default function ItemRequestsPage() {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-8 flex flex-col items-center gap-6">
+    <div className="flex flex-col gap-6 items-center mx-auto mt-8 max-w-md">
       <h2 className="font-bold">Approve Items</h2>
 
-      <div className="flex flex-col w-full gap-4">
+      <div className="flex flex-col gap-4 w-full">
         <Input
           type="text"
           placeholder="Type an item"
@@ -35,7 +35,7 @@ export default function ItemRequestsPage() {
       <div className="flex flex-col gap-3">
         <h3 className="underline">Currently approved items:</h3>
         {itemList.length > 0 ? (
-          <ul className="list-disc pl-5">
+          <ul className="pl-5 list-disc">
             {itemList.map((listItem, index) => (
               <li key={index}>{listItem}</li>
             ))}
